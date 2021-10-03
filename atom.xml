@@ -1,54 +1,568 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://duyanren.github.io</id>
-    <title>Gridea</title>
-    <updated>2021-10-03T03:04:40.139Z</updated>
+    <title>搬砖小达人~</title>
+    <updated>2021-10-03T03:53:27.749Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://duyanren.github.io"/>
     <link rel="self" href="https://duyanren.github.io/atom.xml"/>
     <subtitle>温故而知新</subtitle>
     <logo>https://duyanren.github.io/images/avatar.png</logo>
     <icon>https://duyanren.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Gridea</rights>
+    <rights>All rights reserved 2021, 搬砖小达人~</rights>
     <entry>
-        <title type="html"><![CDATA[test]]></title>
-        <id>https://duyanren.github.io/post/test/</id>
-        <link href="https://duyanren.github.io/post/test/">
+        <title type="html"><![CDATA[eslint+typescript+prettier+husky+lint-staged规范前端代码配置]]></title>
+        <id>https://duyanren.github.io/post/eslinttypescriptprettierhuskylint-staged-gui-fan-qian-duan-dai-ma-pei-zhi/</id>
+        <link href="https://duyanren.github.io/post/eslinttypescriptprettierhuskylint-staged-gui-fan-qian-duan-dai-ma-pei-zhi/">
         </link>
-        <updated>2021-10-03T02:55:55.000Z</updated>
-        <content type="html"><![CDATA[<p>hahaha</p>
+        <updated>2021-10-03T03:48:00.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="痛点">痛点</h3>
+<ul>
+<li><mark>代码可读性低</mark></li>
+<li><mark>代码规范落地难</mark></li>
+<li><mark>代码格式难统一</mark></li>
+<li><mark>代码质量低下</mark></li>
+</ul>
+<h3 id="为什么用-eslint不直接用-tslint">为什么用 eslint不直接用 tslint？</h3>
+<p><em><mark>In the TypeScript 2019 Roadmap, the TypeScript core team explains that ESLint has a more performant architecture than TSLint and that they will only be focusing on ESLint when providing editor linting integration for TypeScript. For that reason, I would recommend using ESLint for linting TypeScript projects.</mark></em></p>
+<h3 id="1-安装-eslint-typescript-eslintparser-typescript-eslinteslint-plugin">1.  安装  eslint   @typescript-eslint/parser  @typescript-eslint/eslint-plugin:</h3>
+<pre><code>yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --dev
+or
+npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
+</code></pre>
+<ul>
+<li><mark>eslint:</mark> The core ESLint linting library</li>
+<li><mark>@typescript-eslint/parser:</mark>  ESLint对TypeScript代码进行解析</li>
+<li><mark>@typescript-eslint/eslint-plugin:</mark> 包含一组特定的TypeScript的ESLint规则的插件</li>
+</ul>
+<h3 id="2-在项目根目录新建一个配置文件eslintrcjs-最好不要用eslintrcjsoneslintrcjs可以写注释">2. 在项目根目录新建一个配置文件.eslintrc.js。最好不要用.eslintrc.json(.eslintrc.js可以写注释)</h3>
+<html>
+.eslintrc.js文件配置 
+</html>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+  ],
+ parserOptions:  {
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+};
+</code></pre>
+<html>
+如果使用TypeScript + React开发 ，则应该安装eslint-plugin-react 依赖项，可以使用以下配置:
+</html>
+<pre><code>yarn add eslint-plugin-react --dev
+or
+npm install eslint-plugin-react --save-dev
+</code></pre>
+<html>
+如果使用react hooks api，则应该安装eslint-plugin-react-hooks 依赖项
+</html>
+<pre><code>yarn add eslint-plugin-react-hooks --dev
+or
+npm install eslint-plugin-react-hooks --save-dev
+</code></pre>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
+  ],
+  parserOptions:  {
+  ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+  sourceType:  'module',  // Allows for the use of imports
+  ecmaFeatures:  {
+    jsx:  true,  // Allows for the parsing of JSX
+  },
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+  settings:  {
+    react:  {
+      version:  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
+};
+</code></pre>
+<html>
+如果使用TypeScript + Vue开发 ，则应该安装eslint-plugin-vue 依赖项，可以使用以下配置:
+</html>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    'plugin:vue/essential'
+  ],
+  parserOptions:  {
+  ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+  sourceType:  'module',  // Allows for the use of imports
+  ecmaFeatures:  {
+    jsx:  true,  // Allows for the parsing of JSX
+  },
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+  settings:  {
+    react:  {
+      version:  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
+};
+</code></pre>
+<h3 id="3-adding-prettier">3. Adding Prettier</h3>
+<pre><code>yarn add prettier eslint-config-prettier eslint-plugin-prettier --dev
+or
+npm install prettier eslint-config-prettier eslint-plugin-prettier --save-dev
+</code></pre>
+<ul>
+<li><mark>prettier:</mark> The core prettier library</li>
+<li><mark>eslint-config-prettier:</mark> Disables ESLint rules that might conflict with prettier</li>
+<li><mark>eslint-plugin-prettier:</mark> Runs prettier as an ESLint rule</li>
+</ul>
+<p><mark>在项目根目录新建一个配置文件.prettierrc.js。文件配置也可以放到.eslintrc.js中</mark></p>
+<pre><code>module.exports =  {
+  semi:  true,
+  trailingComma:  'all',
+  singleQuote:  true,
+  printWidth:  120,
+  tabWidth:  2,
+};
+</code></pre>
+<p>Next, the .eslintrc.js file needs to be updated:</p>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'prettier/@typescript-eslint',  // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'plugin:prettier/recommended',  // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  ],
+  parserOptions:  {
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+  },
+  rules: {
+    // 自定义 prettier 规则
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        trailingComma: 'all',
+        singleQuote: true,
+        printWidth: 120,
+        tabWidth: 2
+      }
+    ]
+  }
+};
+</code></pre>
+<p>The advantage of having prettier setup as an ESLint rule using eslint-plugin-prettier is that code can automatically be fixed using ESLint's --fix option.</p>
+<h3 id="4automatically-fixing-code-vs-code">4.Automatically Fixing Code (VS Code)</h3>
+<p>For a good developer experience, it's useful to setup your editor to automatically run ESLint's automatic fix command (i.e. eslint --fix) whenever a file is saved. Since i'm using VS Code, here is the config required in the settings.json file in VS Code to get automatic fixing whenever saving a file:</p>
+<pre><code>&quot;eslint.autoFixOnSave&quot;: true,
+&quot;eslint.validate&quot;: [
+    &quot;javascript&quot;,
+    &quot;javascriptreact&quot;,
+    &quot;typescript&quot;,
+    &quot;typescriptreact&quot;
+],
+</code></pre>
+<p>If you've also set the editor.formatOnSave option to true in your settings.json, you'll need to add the following config to prevent running 2 formatting commands on save for JavaScript and TypeScript files:</p>
+<pre><code>&quot;editor.formatOnSave&quot;:  true,
+&quot;[javascript]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[javascriptreact]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[typescript]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[typescriptreact]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+</code></pre>
+<h3 id="5-安装husky-lint-staged">5. 安装husky lint-staged</h3>
+<pre><code>yarn add husky lint-staged --dev
+or
+npm install husky lint-staged --save-dev
+</code></pre>
+<p>package.json文件</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;eslint&quot;: &quot;eslint src --ext .ts&quot;,
+    &quot;lint&quot;: &quot;tsc src/**/*.ts&quot;,
+    &quot;precommit&quot;: &quot;lint-staged&quot;
+  },
+  &quot;lint-staged&quot;: {
+    &quot;src/**/*.{ts,tsx,jsx,vue}&quot;: [
+      &quot;prettier --write&quot;, // 最好不加
+      &quot;eslint --fix&quot;, //
+      &quot;git add&quot;
+    ]
+  },
+</code></pre>
+<h3 id="6-简单的eslintrcjs文件配置">6. 简单的.eslintrc.js文件配置</h3>
+<pre><code>module.exports = {
+  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  extends: [
+    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  ],
+  parserOptions: {
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+  },
+  plugins: ['@typescript-eslint', 'react-hooks', 'prettier'],
+  globals: {
+    // 这里填入你的项目需要的全局变量
+  },
+  rules: {
+    // 这里填入你的项目需要的个性化配置
+    // 自定义 prettier 规则
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        trailingComma: 'all',
+        singleQuote: true,
+        printWidth: 120,
+        tabWidth: 2,
+      },
+    ],
+    // 一个缩进必须用两个空格替代
+    indent: [
+      'error',
+      2,
+      {
+        SwitchCase: 1,
+        flatTernaryExpressions: true,
+      },
+    ],
+    'react-hooks/rules-of-hooks': 'error', // react hooks校验
+    'react-hooks/exhaustive-deps': 'warn',
+    // 禁止使用console
+    'no-console': 'error',
+    'no-return-assign': 'warn',
+    'array-callback-return': 'error',
+    'guard-for-in': 'off',
+    'max-len': 'error', // 字符串最大长度
+    // 类和接口的命名必须遵守帕斯卡命名法，比如 PersianCat
+    '@typescript-eslint/class-name-casing': 'error',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+  },
+};
+
+</code></pre>
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://duyanren.github.io/post/hello-gridea/</id>
-        <link href="https://duyanren.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[Git常用命令]]></title>
+        <id>https://duyanren.github.io/post/git-chang-yong-ming-ling/</id>
+        <link href="https://duyanren.github.io/post/git-chang-yong-ming-ling/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+        <updated>2021-10-03T03:37:51.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="git-add"><strong>git add</strong></h2>
+<pre><code>1. git init 
+&lt;!--初始化一个 Git仓库（repository），即把当前所在目录变成 Git 可以管理的仓库--&gt;
+</code></pre>
+<pre><code>2. git add 文件
+&lt;!--把文件添加到 暂存区（stage），可被 track 追踪纪录下来。可多次使用来添加多个文件。--&gt;
+</code></pre>
+<pre><code>3. git add -A
+&lt;!--暂存所有的文件，包括新增加的、修改的和删除的文件。--&gt;
+</code></pre>
+<pre><code>4.git add .
+&lt;!--暂存新增加的和修改的文件，不包括已删除的文件。即当前目录下所有文件。--&gt;
+</code></pre>
+<h2 id="git-commit"><strong>git commit</strong></h2>
+<pre><code>1.git commit -m &quot;本次提交说明&quot;
+&lt;!--一次性把暂存区所有文件修改提交到仓库的当前分支--&gt;
+</code></pre>
+<pre><code>2. git commit -am &quot;本次提交说明&quot;
+&lt;!--使用该命令，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 git add 步骤，参数 -am 也可写成 -a -m。“在 oh-my-zsh 下，直接用 gcam “message” 就搞定了”，--&gt;
+</code></pre>
+<pre><code>3. git commit --amend
+&lt;!--重新提交，最终只会有一个提交，第二次提交将代替第一次提交的结果。尤其适用于提交完了才发现漏掉了几个文件没有添加，或者提交信息写错了的情况。--&gt;
+</code></pre>
+<h4 id="diff-and-show"><strong>DIFF AND SHOW</strong></h4>
+<pre><code>1. git status
+&lt;!--显示当前仓库的最新状态。提交之后，工作区就是“干净的”，即没有新的修改；有未提交文件时，最上面显示的是在 staging area，即将被 commit 的文件；中间显示没有 stage 的修改了的文件，最下面是新的还没有被 Git track 的文件。“在 oh-my-zsh 下，输入 gst 就出来了，谁用谁知道，装逼利器，效率杠杠的--&gt;
+</code></pre>
+<pre><code>2. git diff
+//查看工作区中的修改
+</code></pre>
+<pre><code>3. git diff --staged 或 git diff --cached
+&lt;!--查看暂存区中的修改--&gt;
+</code></pre>
+<pre><code>4. git diff &lt;commit id1&gt; &lt;commit id2&gt;
+//比较两次 commit 之间的差异
+</code></pre>
+<pre><code>5. git diff &lt;branch1&gt; &lt;branch2&gt;
+&lt;!-- 两个 branch 之间比较 --&gt;
+</code></pre>
+<pre><code>6. git diff 文件
+//查看指定文件具体修改了哪些内容
+</code></pre>
+<pre><code>7. git show
+//查看最后一个 commit 的修改
+</code></pre>
+<pre><code>8. git blame 文件
+//查看谁什么时间改了哪些文件
+</code></pre>
+<h4 id="log"><strong>LOG</strong></h4>
+<pre><code>1. git log
+&lt;!--显示从最近到最远的提交日志，包括每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明等基本信息。--&gt;
+</code></pre>
+<pre><code>2. git log -p -2
+&lt;!--除显示基本信息之外，还显示每次提交的内容差异，-2 意思是仅显示最近两次提交。特别适用于进行代码审查，或者快速浏览某个搭档提交的 commit 所带来的变化--&gt;
+</code></pre>
+<pre><code>3. git log --graph
+&lt;!--查看分支合并图--&gt;
+</code></pre>
+<pre><code>4. git log --pretty=oneline
+&lt;!-- --&gt;
+&lt;!-- 简化日志信息，将每个提交放在一行显示，查看的提交数很大时非常有用，也可带有 –graph 参数，效果同 git config format.pretty oneline --&gt;
+</code></pre>
+<pre><code>5. git reflog
+&lt;!-- 纪录每一次命令，可用于查找某一提交版本的 commit id --&gt;
+</code></pre>
+<h4 id="reset-and-revert"><strong>RESET AND REVERT</strong></h4>
+<pre><code>1. git reset HEAD 文件
+&lt;!--把暂存区的修改撤销（unstage），回退到工作区。注意：在 Git 中任何已提交的东西几乎总是可以恢复的。甚至那些被删除的分支中的提交或使用 –amend 选项覆盖的提交也可以恢复。然而，任何未提交的东西丢失后很可能再也找不到了--&gt;
+</code></pre>
+<pre><code>2. git reset --hard
+&lt;!--重置所有文件到未修改的状态--&gt;
+</code></pre>
+<pre><code>3. git reset &lt;commit SHA&gt;
+&lt;!--重置到某个 commit--&gt;
+</code></pre>
+<pre><code>4. git reset --hard HEAD^
+&lt;!--回退到上一个版本。同理，回退到上上个版本为：HEAD^ ^， 回退到上100个版本为：HEAD-100，貌似波浪号 ~ 也可以，变成倒数第101个。--&gt;
+</code></pre>
+<pre><code>5. git reset --hard &lt;commit id&gt;
+&lt;!--回退到某一提交过的版本，如果已经 push，则回退的意义不大了--&gt;
+</code></pre>
+<pre><code>6. git revert &lt;commit id&gt;
+&lt;!--还原某个 commit。还原（revert）的实质是产生一个新的 commit，内容和要还原的 commit 完全相反。比如，A commit 在 main.c 中增加了三行，revert A 产生的 commit 就会删除这三行。如果我们非常确定之前的某个 commit 产生了 bug，最好的办法就是 revert 它。git revert 后 git 会提示写一些 commit message，此处最好简单描述为什么要还原；而重置（reset）会修改历史，常用于还没有 push 的本地 commits--&gt;
+</code></pre>
+<pre><code>7. git revert HEAD
+&lt;!--还原到上次 commit--&gt;
+</code></pre>
+<h4 id="remove"><strong>REMOVE</strong></h4>
+<pre><code>1. git rm 文件
+&lt;!--把文件从版本库中删除，不会再追踪到--&gt;
+</code></pre>
+<h4 id="remote"><strong>REMOTE</strong></h4>
+<pre><code>1. git remote
+&lt;!--查看已经配置的远程仓库服务器--&gt;
+</code></pre>
+<h4 id="clone"><strong>CLONE</strong></h4>
+<pre><code>git clone git@github.com:username/&lt;repo name&gt;.git
+&lt;!--从远程库（origin）克隆一份到本地，仓库名同远程仓库名--&gt;
+</code></pre>
+<h4 id="branch-and-merge"><strong>BRANCH</strong> AND MERGE</h4>
+<pre><code>1. git branch
+&lt;!--列出本地当前所有分支，方便查看。当前分支前面会标有一个 * 号--&gt;
+</code></pre>
+<pre><code>2. git branch -r
+&lt;!--查看远程分支列表--&gt;
+</code></pre>
+<pre><code>3. git branch -a
+显示所有分支，包括本地和远程
+</code></pre>
+<pre><code>4. git branch -v
+// 查看每一次分支的最后一次提交
+</code></pre>
+<pre><code>5. git branch --merged
+&lt;!--查看所有已经被 merge 的 branch--&gt;
+</code></pre>
+<pre><code>6. git branch --no-merged
+&lt;!--查看所有还没被 merge 的 branch--&gt;
+</code></pre>
+<pre><code>7. git branch --merged | xargs git branch -d
+&lt;!--删除所有已经被 merge 的 branch--&gt;
+</code></pre>
+<pre><code>8. git checkout -b 分支
+&lt;!--创建并切换到新的分支，相当于下面两条命令：git branch 分支 + git checkout 分支--&gt;
+</code></pre>
+<pre><code>9. git cherry-pick &lt;commit id&gt;
+&lt;!--假如我们在某个 branch 做了一大堆 commit，而当前 branch 想应用其中的一个，可以使用该命令--&gt;
+</code></pre>
+<pre><code>10. git merge 分支
+&lt;!--合并指定分支到当前所在的分支--&gt;
+</code></pre>
+<pre><code>11. git merge --no-ff -m &quot;提交说明信息&quot; 分支
+&lt;!--参数 –no-ff 表示禁用 Fast forward 快进模式，用普通模式合并，这样合并后的历史有分支，能看出来曾经做过合并，而 fast forwad 合并就看不出来曾经做过合并--&gt;
+</code></pre>
+<pre><code>12. git branch -d 分支
+&lt;!--普通删除分支（相对强制删除而言）。一般情况下，先合并完分支，然后再删除，否则会删除失败，除非使用 -D 参数强制删除。注意：因为创建、合并和删除分支非常快，所以 Git 鼓励使用分支完成某个任务，合并后再删除分支，这个直接在 master 分支上工作效果是一样的，但过程更安全--&gt;
+</code></pre>
+<pre><code>13. git branch -D 分支
+&lt;!--强行删除分支，尤其适用分支内容有了新的修改但还没有被合并的情况--&gt;
+</code></pre>
+<pre><code>14. git branch --set-upstream 分支 origin/分支
+&lt;!--建立本地分支和远程分支的关联--&gt;
+</code></pre>
+<h4 id="stash"><strong>STASH</strong></h4>
+<pre><code>1. git stash
+&lt;!--把当前分支的工作现场储存起来，等以后恢复现场后继续工作。一般适用于还没有 commit 的分支代码--&gt;
+</code></pre>
+<pre><code>2. git stash list
+&lt;!--查看储存的工作现场纪录列表--&gt;
+</code></pre>
+<pre><code>3. git stash pop
+&lt;!--恢复回到工作现场的同时把 stash 内容也删除了--&gt;
+</code></pre>
+<pre><code>4. git stash clear
+&lt;!--清空所有暂存区的 stash 纪录。drop 是只删除一条，当然后面可以跟 stash_id 参数来删除指定的某条纪录，不跟参数就是删除最近的。--&gt;
+</code></pre>
+<h4 id="pull-and-push"><strong>PULL</strong> AND PUSH</h4>
+<pre><code>1. git push origin 分支
+&lt;!--把该分支上的所有本地提交推送到远程库对应的远程分支上--&gt;
+</code></pre>
+<pre><code>2. git pull
+&lt;!--抓取远程库最新提交，拉取并合并--&gt;
+</code></pre>
+<pre><code>3. git fetch
+&lt;!--没有 merge 的 pull--&gt;
+</code></pre>
+<pre><code>4. git push origin --delete 远程分支 或 git push origin:远程分支
+&lt;!--删除一个远程分支。基本上这个命令做的只是从服务器上移除这个指针。 Git 服务器通常会保留数据一段时间直到垃圾回收运行，所以如果不小心删除掉了，通常是很容易恢复的--&gt;
+</code></pre>
+<pre><code>5. git push origin -delete 分支
+&lt;!--在本地和远程同步删除分支--&gt;
+</code></pre>
+<pre><code>6. git push -u origin master
+&lt;!--关联后，使用该命令第一次推送 master 分支的所有内容，后续再推送的时候就可以省略后面三个参数了，其中参数 u 代表上游（upstream）的意思。--&gt;
+</code></pre>
+<pre><code>7. git push origin &lt;tag-name&gt;
+&lt;!--推送本地某个标签到远程，默认情况下，git push 命令并不会推送标签到远程，必须显示推送。--&gt;
+</code></pre>
+<pre><code>8. git push origin --tags
+&lt;!--参数 –tags 表示一次性推送全部未推送到远程的本地标签，当其他人从仓库中克隆或拉取，他们也能得到那些标签。--&gt;
+</code></pre>
+<pre><code>9. git push origin :refs/tags/&lt;tag-name&gt;
+&lt;!--删除一个远程标签，先从本地删除，再用该命令从远程删除。--&gt;
+</code></pre>
+<pre><code>10. git pull --rebase
+&lt;!--修整提交线图，使其形成一条直线。--&gt;
+</code></pre>
+<h4 id="tag"><strong>TAG</strong></h4>
+<pre><code>1. git tag
+&lt;!--查看所有标签--&gt;
+</code></pre>
+<pre><code>2. git show &lt;tag-name&gt;
+&lt;!--查看标签信息--&gt;
+</code></pre>
+<pre><code>3. git checkout &lt;tag-name&gt;
+&lt;!--切换 tag。--&gt;
+</code></pre>
+<pre><code>4. git tag &lt;tag name&gt; &lt;commit id&gt;
+&lt;!--在需要打标签的分支上创建一个轻量标签（lightweight），默认为 HEAD，也可以指定一个 commit id。--&gt;
+</code></pre>
+<pre><code>5. git tag -a &lt;tag-name&gt; -m &quot;标签说明文字&quot; &lt;commit id&gt;
+&lt;!--创建附注标签（annotated），用 -a 指定标签名，-m 指定说明文字，也可以指定一个 commit id。--&gt;
+</code></pre>
+<pre><code>6. git tag -a &lt;tag-name&gt; 提交的校验和或部分校验和
+&lt;!--后期打标签，即对过去的提交打标签。校验和（checksum）：长度为 40位的16进制数的 SHA-1 值字符串。然而，只要没有冲突，通常可以用一个比较短的前缀来表示一个 commit。--&gt;
+</code></pre>
+<pre><code>7. git tag -d &lt;tag-name&gt;
+&lt;!--删除一个本地标签。因为创建的标签都只存储在本地，不会自动推送到远程。所以，打错的标签可以在本地安全删除。--&gt;
+</code></pre>
+<h4 id="git-checkout"><strong>git checkout</strong></h4>
+<pre><code>1. git checkout &lt;tag-name&gt;
+&lt;!--切换 tag。--&gt;
+</code></pre>
+<pre><code>2. git checkout -b 分支 origin/分支
+&lt;!--如果远程有某一个分支而本地没有，用该命令把远程的这个分支迁到本地--&gt;
+</code></pre>
+<pre><code>3. git checkout -b 分支
+&lt;!--创建并切换到新的分支，相当于下面两条命令：git branch 分支 + git checkout 分支--&gt;
+</code></pre>
+<pre><code>4. git checkout -- 文件
+&lt;!--丢弃工作区的修改，包括修改后还没有放到暂存区和添加到暂存区后又作了修改两种情况。总之，让该文件回到最近一次 git commit 或 git add 之后的状态。注意：没有 – ，就变成了切换分支的命令了--&gt;
+</code></pre>
+<pre><code>4. git checkout .
+&lt;!--放弃本地所有修改的--&gt;
+</code></pre>
+<pre><code>5. git checkout 分支
+&lt;!--切换分支--&gt;
+</code></pre>
+<pre><code>6. 解决.gitignore失效
+git rm -r --cached .
+git add .
+git commit -m &quot;update .gitignore&quot;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Git Commit规范]]></title>
+        <id>https://duyanren.github.io/post/git-commit/</id>
+        <link href="https://duyanren.github.io/post/git-commit/">
+        </link>
+        <updated>2021-10-03T02:55:55.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="安装-commitizen-后进行初始化">安装 commitizen 后，进行初始化</h2>
+<pre><code>npm install -g commitizen or yarn global add commitizen
+commitizen init cz-conventional-changelog --save-dev --save-exact
+</code></pre>
+<h2 id="格式校验工具-commitlint">格式校验工具 commitlint</h2>
+<pre><code>yarn add @commitlint/{config-conventional,cli} --dev
+</code></pre>
+<html>
+同时需要在项目目录下创建配置文件 .commitlintrc.js
+</html>
+<pre><code>module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {},
+};
+
+</code></pre>
+<html>
+安装husky
+</html>
+<pre><code>yarn add husky@next -D
+</code></pre>
+<h2 id="配置-packagejson">配置 package.json</h2>
+<pre><code>  &quot;husky&quot;: {
+    &quot;hooks&quot;: {
+      &quot;pre-commit&quot;: &quot;lint-staged&quot;,
+      &quot;commit-msg&quot;: &quot;commitlint -E HUSKY_GIT_PARAMS&quot;
+    }
+  },
+  &quot;lint-staged&quot;: {
+    &quot;src/**/*.{ts,tsx,jsx}&quot;: [
+      &quot;eslint --fix&quot;,
+      &quot;git add&quot;
+    ]
+  },
+</code></pre>
+<h2 id="生成-changelog-工具-conventional-changelog">生成 Changelog 工具 Conventional Changelog</h2>
+<pre><code>yarn add standard-version --dev
+</code></pre>
+<html>
+然后配置package.json配置执行的脚本
+</html>
+<pre><code>{
+  &quot;scripts&quot;: {
+    &quot;release&quot;: &quot;standard-version&quot;
+  }
+}
+</code></pre>
 ]]></content>
     </entry>
 </feed>

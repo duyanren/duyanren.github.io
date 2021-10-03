@@ -1,0 +1,440 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>eslint+typescript+prettier+husky+lint-staged规范前端代码配置 | 搬砖小达人~</title>
+<link rel="shortcut icon" href="https://duyanren.github.io/favicon.ico?v=1633233200751">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://duyanren.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="eslint+typescript+prettier+husky+lint-staged规范前端代码配置 | 搬砖小达人~ - Atom Feed" href="https://duyanren.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="痛点
+
+代码可读性低
+代码规范落地难
+代码格式难统一
+代码质量低下
+
+为什么用 eslint不直接用 tslint？
+In the TypeScript 2019 Roadmap, the TypeScript core team expl..." />
+    <meta name="keywords" content="engineer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://duyanren.github.io">
+  <img class="avatar" src="https://duyanren.github.io/images/avatar.png?v=1633233200751" alt="">
+  </a>
+  <h1 class="site-title">
+    搬砖小达人~
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              eslint+typescript+prettier+husky+lint-staged规范前端代码配置
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-10-03
+              </span>
+              <span>
+                8 min read
+              </span>
+              
+                <a href="https://duyanren.github.io/tag/z8nMAl-5v/" class="post-tag">
+                  # engineer
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="痛点">痛点</h3>
+<ul>
+<li><mark>代码可读性低</mark></li>
+<li><mark>代码规范落地难</mark></li>
+<li><mark>代码格式难统一</mark></li>
+<li><mark>代码质量低下</mark></li>
+</ul>
+<h3 id="为什么用-eslint不直接用-tslint">为什么用 eslint不直接用 tslint？</h3>
+<p><em><mark>In the TypeScript 2019 Roadmap, the TypeScript core team explains that ESLint has a more performant architecture than TSLint and that they will only be focusing on ESLint when providing editor linting integration for TypeScript. For that reason, I would recommend using ESLint for linting TypeScript projects.</mark></em></p>
+<h3 id="1-安装-eslint-typescript-eslintparser-typescript-eslinteslint-plugin">1.  安装  eslint   @typescript-eslint/parser  @typescript-eslint/eslint-plugin:</h3>
+<pre><code>yarn add eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --dev
+or
+npm install eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin --save-dev
+</code></pre>
+<ul>
+<li><mark>eslint:</mark> The core ESLint linting library</li>
+<li><mark>@typescript-eslint/parser:</mark>  ESLint对TypeScript代码进行解析</li>
+<li><mark>@typescript-eslint/eslint-plugin:</mark> 包含一组特定的TypeScript的ESLint规则的插件</li>
+</ul>
+<h3 id="2-在项目根目录新建一个配置文件eslintrcjs-最好不要用eslintrcjsoneslintrcjs可以写注释">2. 在项目根目录新建一个配置文件.eslintrc.js。最好不要用.eslintrc.json(.eslintrc.js可以写注释)</h3>
+<html>
+.eslintrc.js文件配置 
+</html>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+  ],
+ parserOptions:  {
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+};
+</code></pre>
+<html>
+如果使用TypeScript + React开发 ，则应该安装eslint-plugin-react 依赖项，可以使用以下配置:
+</html>
+<pre><code>yarn add eslint-plugin-react --dev
+or
+npm install eslint-plugin-react --save-dev
+</code></pre>
+<html>
+如果使用react hooks api，则应该安装eslint-plugin-react-hooks 依赖项
+</html>
+<pre><code>yarn add eslint-plugin-react-hooks --dev
+or
+npm install eslint-plugin-react-hooks --save-dev
+</code></pre>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
+  ],
+  parserOptions:  {
+  ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+  sourceType:  'module',  // Allows for the use of imports
+  ecmaFeatures:  {
+    jsx:  true,  // Allows for the parsing of JSX
+  },
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+  settings:  {
+    react:  {
+      version:  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
+};
+</code></pre>
+<html>
+如果使用TypeScript + Vue开发 ，则应该安装eslint-plugin-vue 依赖项，可以使用以下配置:
+</html>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
+    'plugin:vue/essential'
+  ],
+  parserOptions:  {
+  ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+  sourceType:  'module',  // Allows for the use of imports
+  ecmaFeatures:  {
+    jsx:  true,  // Allows for the parsing of JSX
+  },
+  },
+  rules:  {
+    // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
+    // e.g. &quot;@typescript-eslint/explicit-function-return-type&quot;: &quot;off&quot;,
+  },
+  settings:  {
+    react:  {
+      version:  'detect',  // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
+};
+</code></pre>
+<h3 id="3-adding-prettier">3. Adding Prettier</h3>
+<pre><code>yarn add prettier eslint-config-prettier eslint-plugin-prettier --dev
+or
+npm install prettier eslint-config-prettier eslint-plugin-prettier --save-dev
+</code></pre>
+<ul>
+<li><mark>prettier:</mark> The core prettier library</li>
+<li><mark>eslint-config-prettier:</mark> Disables ESLint rules that might conflict with prettier</li>
+<li><mark>eslint-plugin-prettier:</mark> Runs prettier as an ESLint rule</li>
+</ul>
+<p><mark>在项目根目录新建一个配置文件.prettierrc.js。文件配置也可以放到.eslintrc.js中</mark></p>
+<pre><code>module.exports =  {
+  semi:  true,
+  trailingComma:  'all',
+  singleQuote:  true,
+  printWidth:  120,
+  tabWidth:  2,
+};
+</code></pre>
+<p>Next, the .eslintrc.js file needs to be updated:</p>
+<pre><code>module.exports =  {
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser
+  extends:  [
+    'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'prettier/@typescript-eslint',  // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'plugin:prettier/recommended',  // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  ],
+  parserOptions:  {
+    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
+    sourceType:  'module',  // Allows for the use of imports
+  },
+  rules: {
+    // 自定义 prettier 规则
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        trailingComma: 'all',
+        singleQuote: true,
+        printWidth: 120,
+        tabWidth: 2
+      }
+    ]
+  }
+};
+</code></pre>
+<p>The advantage of having prettier setup as an ESLint rule using eslint-plugin-prettier is that code can automatically be fixed using ESLint's --fix option.</p>
+<h3 id="4automatically-fixing-code-vs-code">4.Automatically Fixing Code (VS Code)</h3>
+<p>For a good developer experience, it's useful to setup your editor to automatically run ESLint's automatic fix command (i.e. eslint --fix) whenever a file is saved. Since i'm using VS Code, here is the config required in the settings.json file in VS Code to get automatic fixing whenever saving a file:</p>
+<pre><code>&quot;eslint.autoFixOnSave&quot;: true,
+&quot;eslint.validate&quot;: [
+    &quot;javascript&quot;,
+    &quot;javascriptreact&quot;,
+    &quot;typescript&quot;,
+    &quot;typescriptreact&quot;
+],
+</code></pre>
+<p>If you've also set the editor.formatOnSave option to true in your settings.json, you'll need to add the following config to prevent running 2 formatting commands on save for JavaScript and TypeScript files:</p>
+<pre><code>&quot;editor.formatOnSave&quot;:  true,
+&quot;[javascript]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[javascriptreact]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[typescript]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+&quot;[typescriptreact]&quot;:  {
+  &quot;editor.formatOnSave&quot;:  false,
+},
+</code></pre>
+<h3 id="5-安装husky-lint-staged">5. 安装husky lint-staged</h3>
+<pre><code>yarn add husky lint-staged --dev
+or
+npm install husky lint-staged --save-dev
+</code></pre>
+<p>package.json文件</p>
+<pre><code>&quot;scripts&quot;: {
+    &quot;eslint&quot;: &quot;eslint src --ext .ts&quot;,
+    &quot;lint&quot;: &quot;tsc src/**/*.ts&quot;,
+    &quot;precommit&quot;: &quot;lint-staged&quot;
+  },
+  &quot;lint-staged&quot;: {
+    &quot;src/**/*.{ts,tsx,jsx,vue}&quot;: [
+      &quot;prettier --write&quot;, // 最好不加
+      &quot;eslint --fix&quot;, //
+      &quot;git add&quot;
+    ]
+  },
+</code></pre>
+<h3 id="6-简单的eslintrcjs文件配置">6. 简单的.eslintrc.js文件配置</h3>
+<pre><code>module.exports = {
+  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
+  extends: [
+    'plugin:@typescript-eslint/recommended', // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+  ],
+  parserOptions: {
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
+  },
+  plugins: ['@typescript-eslint', 'react-hooks', 'prettier'],
+  globals: {
+    // 这里填入你的项目需要的全局变量
+  },
+  rules: {
+    // 这里填入你的项目需要的个性化配置
+    // 自定义 prettier 规则
+    'prettier/prettier': [
+      'error',
+      {
+        semi: true,
+        trailingComma: 'all',
+        singleQuote: true,
+        printWidth: 120,
+        tabWidth: 2,
+      },
+    ],
+    // 一个缩进必须用两个空格替代
+    indent: [
+      'error',
+      2,
+      {
+        SwitchCase: 1,
+        flatTernaryExpressions: true,
+      },
+    ],
+    'react-hooks/rules-of-hooks': 'error', // react hooks校验
+    'react-hooks/exhaustive-deps': 'warn',
+    // 禁止使用console
+    'no-console': 'error',
+    'no-return-assign': 'warn',
+    'array-callback-return': 'error',
+    'guard-for-in': 'off',
+    'max-len': 'error', // 字符串最大长度
+    // 类和接口的命名必须遵守帕斯卡命名法，比如 PersianCat
+    '@typescript-eslint/class-name-casing': 'error',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+  },
+};
+
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E7%97%9B%E7%82%B9">痛点</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-eslint%E4%B8%8D%E7%9B%B4%E6%8E%A5%E7%94%A8-tslint">为什么用 eslint不直接用 tslint？</a></li>
+<li><a href="#1-%E5%AE%89%E8%A3%85-eslint-typescript-eslintparser-typescript-eslinteslint-plugin">1.  安装  eslint   @typescript-eslint/parser  @typescript-eslint/eslint-plugin:</a></li>
+<li><a href="#2-%E5%9C%A8%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6eslintrcjs-%E6%9C%80%E5%A5%BD%E4%B8%8D%E8%A6%81%E7%94%A8eslintrcjsoneslintrcjs%E5%8F%AF%E4%BB%A5%E5%86%99%E6%B3%A8%E9%87%8A">2. 在项目根目录新建一个配置文件.eslintrc.js。最好不要用.eslintrc.json(.eslintrc.js可以写注释)</a></li>
+<li><a href="#3-adding-prettier">3. Adding Prettier</a></li>
+<li><a href="#4automatically-fixing-code-vs-code">4.Automatically Fixing Code (VS Code)</a></li>
+<li><a href="#5-%E5%AE%89%E8%A3%85husky-lint-staged">5. 安装husky lint-staged</a></li>
+<li><a href="#6-%E7%AE%80%E5%8D%95%E7%9A%84eslintrcjs%E6%96%87%E4%BB%B6%E9%85%8D%E7%BD%AE">6. 简单的.eslintrc.js文件配置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duyanren.github.io/post/git-chang-yong-ming-ling/">
+              <h3 class="post-title">
+                Git常用命令
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://duyanren.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
