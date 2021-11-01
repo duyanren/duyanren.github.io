@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://duyanren.github.io</id>
     <title>搬砖小达人~</title>
-    <updated>2021-10-03T04:18:59.846Z</updated>
+    <updated>2021-11-01T12:22:15.355Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://duyanren.github.io"/>
     <link rel="self" href="https://duyanren.github.io/atom.xml"/>
@@ -10,6 +10,65 @@
     <logo>https://duyanren.github.io/images/avatar.png</logo>
     <icon>https://duyanren.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, 搬砖小达人~</rights>
+    <entry>
+        <title type="html"><![CDATA[centos安装nginx相关命令]]></title>
+        <id>https://duyanren.github.io/post/centos-an-zhuang-nginx-xiang-guan-ming-ling/</id>
+        <link href="https://duyanren.github.io/post/centos-an-zhuang-nginx-xiang-guan-ming-ling/">
+        </link>
+        <updated>2021-11-01T12:06:29.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="设置源">设置源</h3>
+<pre><code>sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+</code></pre>
+<h3 id="安装">安装</h3>
+<pre><code>yum install -y nginx
+</code></pre>
+<h3 id="启动服务">启动服务</h3>
+<pre><code>systemctl start nginx.service
+</code></pre>
+<h3 id="关闭服务">关闭服务</h3>
+<pre><code>systemctl stop nginx.service
+</code></pre>
+<h3 id="重启nginx">重启nginx</h3>
+<pre><code>systemctl restart nginx
+</code></pre>
+<h3 id="开机自启">开机自启</h3>
+<pre><code>systemctl enable nginx.service
+</code></pre>
+<h3 id="查看nginx进程">查看nginx进程</h3>
+<pre><code>ps -e | grep nginx  
+// 杀死进程
+kill -9 进程id  
+</code></pre>
+<h3 id="检查配置文件是否正确">检查配置文件是否正确</h3>
+<pre><code>nginx -t
+</code></pre>
+<h3 id="nginx的conf配置文件">Nginx的conf配置文件</h3>
+<pre><code>vim /etc/nginx/nginx.conf
+</code></pre>
+<h3 id="nginx配置生效">nginx配置生效</h3>
+<pre><code>nginx -s reload
+nginx -s stop
+</code></pre>
+<h3 id="查找-删除nginx相关文件">查找、删除nginx相关文件</h3>
+<pre><code>whereis nginx
+
+// 检查一下nginx服务是否在运行
+ps -ef | grep nginx
+
+// 查找相关文件
+find / -name nginx
+
+// 依次删除find查找到的所有目录
+rm -rf /usr/local/nginx  /usr/local/sbin/nginx /usr/local/nginx-1.13.9/objs/nginx
+
+// 再使用yum清理
+yum remove nginx
+</code></pre>
+<h3 id="查看监听的端口号">查看监听的端口号</h3>
+<pre><code>netstat -punta | grep LISTEN
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[eslint+typescript+prettier+husky+lint-staged规范前端代码配置]]></title>
         <id>https://duyanren.github.io/post/eslinttypescriptprettierhuskylint-staged-gui-fan-qian-duan-dai-ma-pei-zhi/</id>

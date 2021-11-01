@@ -2,19 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Git Commit规范 | 搬砖小达人~</title>
+<title>centos安装nginx相关命令 | 搬砖小达人~</title>
 <link rel="shortcut icon" href="https://duyanren.github.io/favicon.ico?v=1635769322941">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://duyanren.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Git Commit规范 | 搬砖小达人~ - Atom Feed" href="https://duyanren.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="centos安装nginx相关命令 | 搬砖小达人~ - Atom Feed" href="https://duyanren.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="安装 commitizen 后，进行初始化
-npm install -g commitizen or yarn global add commitizen
-commitizen init cz-conventional-changelog ..." />
-    <meta name="keywords" content="git" />
+    <meta name="description" content="设置源
+sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+
+安装
+yum ins..." />
+    <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -70,70 +72,70 @@ commitizen init cz-conventional-changelog ..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Git Commit规范
+              centos安装nginx相关命令
             </h2>
             <div class="post-info">
               <span>
-                2021-10-03
+                2021-11-01
               </span>
               <span>
                 1 min read
               </span>
               
-                <a href="https://duyanren.github.io/tag/bTrO-4bO4/" class="post-tag">
-                  # git
-                </a>
-              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h2 id="安装-commitizen-后进行初始化">安装 commitizen 后，进行初始化</h2>
-<pre><code>npm install -g commitizen or yarn global add commitizen
-commitizen init cz-conventional-changelog --save-dev --save-exact
+                <h3 id="设置源">设置源</h3>
+<pre><code>sudo rpm -Uvh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
 </code></pre>
-<h2 id="格式校验工具-commitlint">格式校验工具 commitlint</h2>
-<pre><code>yarn add @commitlint/{config-conventional,cli} --dev
+<h3 id="安装">安装</h3>
+<pre><code>yum install -y nginx
 </code></pre>
-<html>
-同时需要在项目目录下创建配置文件 .commitlintrc.js
-</html>
-<pre><code>module.exports = {
-  extends: ['@commitlint/config-conventional'],
-  rules: {},
-};
+<h3 id="启动服务">启动服务</h3>
+<pre><code>systemctl start nginx.service
+</code></pre>
+<h3 id="关闭服务">关闭服务</h3>
+<pre><code>systemctl stop nginx.service
+</code></pre>
+<h3 id="重启nginx">重启nginx</h3>
+<pre><code>systemctl restart nginx
+</code></pre>
+<h3 id="开机自启">开机自启</h3>
+<pre><code>systemctl enable nginx.service
+</code></pre>
+<h3 id="查看nginx进程">查看nginx进程</h3>
+<pre><code>ps -e | grep nginx  
+// 杀死进程
+kill -9 进程id  
+</code></pre>
+<h3 id="检查配置文件是否正确">检查配置文件是否正确</h3>
+<pre><code>nginx -t
+</code></pre>
+<h3 id="nginx的conf配置文件">Nginx的conf配置文件</h3>
+<pre><code>vim /etc/nginx/nginx.conf
+</code></pre>
+<h3 id="nginx配置生效">nginx配置生效</h3>
+<pre><code>nginx -s reload
+nginx -s stop
+</code></pre>
+<h3 id="查找-删除nginx相关文件">查找、删除nginx相关文件</h3>
+<pre><code>whereis nginx
 
+// 检查一下nginx服务是否在运行
+ps -ef | grep nginx
+
+// 查找相关文件
+find / -name nginx
+
+// 依次删除find查找到的所有目录
+rm -rf /usr/local/nginx  /usr/local/sbin/nginx /usr/local/nginx-1.13.9/objs/nginx
+
+// 再使用yum清理
+yum remove nginx
 </code></pre>
-<html>
-安装husky
-</html>
-<pre><code>yarn add husky@next -D
-</code></pre>
-<h2 id="配置-packagejson">配置 package.json</h2>
-<pre><code>  &quot;husky&quot;: {
-    &quot;hooks&quot;: {
-      &quot;pre-commit&quot;: &quot;lint-staged&quot;,
-      &quot;commit-msg&quot;: &quot;commitlint -E HUSKY_GIT_PARAMS&quot;
-    }
-  },
-  &quot;lint-staged&quot;: {
-    &quot;src/**/*.{ts,tsx,jsx}&quot;: [
-      &quot;eslint --fix&quot;,
-      &quot;git add&quot;
-    ]
-  },
-</code></pre>
-<h2 id="生成-changelog-工具-conventional-changelog">生成 Changelog 工具 Conventional Changelog</h2>
-<pre><code>yarn add standard-version --dev
-</code></pre>
-<html>
-然后配置package.json配置执行的脚本
-</html>
-<pre><code>{
-  &quot;scripts&quot;: {
-    &quot;release&quot;: &quot;standard-version&quot;
-  }
-}
+<h3 id="查看监听的端口号">查看监听的端口号</h3>
+<pre><code>netstat -punta | grep LISTEN
 </code></pre>
 
               </div>
@@ -141,10 +143,22 @@ commitizen init cz-conventional-changelog --save-dev --save-exact
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%AE%89%E8%A3%85-commitizen-%E5%90%8E%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96">安装 commitizen 后，进行初始化</a></li>
-<li><a href="#%E6%A0%BC%E5%BC%8F%E6%A0%A1%E9%AA%8C%E5%B7%A5%E5%85%B7-commitlint">格式校验工具 commitlint</a></li>
-<li><a href="#%E9%85%8D%E7%BD%AE-packagejson">配置 package.json</a></li>
-<li><a href="#%E7%94%9F%E6%88%90-changelog-%E5%B7%A5%E5%85%B7-conventional-changelog">生成 Changelog 工具 Conventional Changelog</a></li>
+<li>
+<ul>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E6%BA%90">设置源</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1">启动服务</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E6%9C%8D%E5%8A%A1">关闭服务</a></li>
+<li><a href="#%E9%87%8D%E5%90%AFnginx">重启nginx</a></li>
+<li><a href="#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF">开机自启</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8Bnginx%E8%BF%9B%E7%A8%8B">查看nginx进程</a></li>
+<li><a href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E6%AD%A3%E7%A1%AE">检查配置文件是否正确</a></li>
+<li><a href="#nginx%E7%9A%84conf%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">Nginx的conf配置文件</a></li>
+<li><a href="#nginx%E9%85%8D%E7%BD%AE%E7%94%9F%E6%95%88">nginx配置生效</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE-%E5%88%A0%E9%99%A4nginx%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6">查找、删除nginx相关文件</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E7%9B%91%E5%90%AC%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7">查看监听的端口号</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -154,6 +168,15 @@ commitizen init cz-conventional-changelog --save-dev --save-exact
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://duyanren.github.io/post/eslinttypescriptprettierhuskylint-staged-gui-fan-qian-duan-dai-ma-pei-zhi/">
+              <h3 class="post-title">
+                eslint+typescript+prettier+husky+lint-staged规范前端代码配置
+              </h3>
+            </a>
+          </div>
         
 
         
